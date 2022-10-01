@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class VectorAddition : MonoBehaviour
+public class VectorFucntions : MonoBehaviour
 {
     public float VectA_x;
     public float VectA_y;
