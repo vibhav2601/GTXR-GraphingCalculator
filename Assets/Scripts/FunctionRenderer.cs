@@ -15,6 +15,8 @@ public class FunctionRenderer : MonoBehaviour
     [SerializeField]
     private float span;
     [SerializeField]
+    private float scaleMultiplier = 1;
+    [SerializeField]
     private GameObject point;
 
     // Start is called before the first frame update
@@ -39,7 +41,9 @@ public class FunctionRenderer : MonoBehaviour
 
                 // Instantiate point prefab and sets its position to calculated <x, y, z>
                 GameObject currPoint = Instantiate(point);
-                currPoint.transform.position = new Vector3(x, y, z);
+                currPoint.transform.parent = this.transform;
+                currPoint.transform.localPosition = new Vector3(x, y, z);
+                currPoint.transform.localScale *= scaleMultiplier;
             }
         }
     }
