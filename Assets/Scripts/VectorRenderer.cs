@@ -1,22 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
-/*
-Written by Ilkin Mammadli, Jack English, Moses Lim, and Hai Dao
-
-- Parameters: vector coordinates and diameter of vector cylinder.
-- If script is placed on a new empty object, make sure you drag the "VectorCylinder" prefab into the Cylinder parameter.
-- You can replace the Cylinder parameter GameObject, as long as the y scale of the object is 1.
-- Vector is tied to the Graph Origin transform and the coordinate positions update live. 
-*/
+/**
+ * Written by Ilkin Mammadli, Jack English, Moses Lim, and Hai Dao
+ *
+ * - Parameters: vector coordinates and diameter of vector cylinder.
+ * - If script is placed on a new empty object, make sure you drag the "VectorCylinder" prefab into the Cylinder parameter.
+ * - You can replace the Cylinder parameter GameObject, as long as the y scale of the object is 1.
+ * - Vector is tied to the Graph Origin transform and the coordinate positions update live. 
+ */
 
 public class VectorRenderer : MonoBehaviour
 {
     // Create variables for vector, cylinder, and diameter.
-    [SerializeField] private Vector3 vector;
-    [SerializeField] private GameObject cylinder;
-    [SerializeField] private float diameter = 0.05f;
+    public Vector3 vector = Vector3.one;
+    [SerializeField] 
+    private GameObject cylinder;
+    [SerializeField]
+    private GameObject cone;
+    [SerializeField] 
+    private float diameter = 0.05f;
     //Rotated 90 degrees on x axis because for some reason that makes the rotation correct. 
     private Vector3 rotation = new Vector3(90, 0, 0);
 
@@ -24,14 +30,20 @@ public class VectorRenderer : MonoBehaviour
     void Start()
     {
         // Instantiates cylinder game object
+        cylinder = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("VectorCylinder")[0]));
         cylinder = Instantiate(cylinder, transform.position, Quaternion.identity);
         cylinder.transform.parent = transform;
+
+        cone = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("VectorCone")[0]));
+        cone = Instantiate(cone, transform.position, Quaternion.identity);
+        cone.transform.parent = transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        cone.transform.localPosition = vector;
+
         var ts = cylinder.transform;
 
         // Sets the position to the midpoint of the origin and the vector coordinate.
@@ -41,8 +53,19 @@ public class VectorRenderer : MonoBehaviour
         pos.z /= 2.0f;
         ts.localPosition = pos;
 
+        float coneDiameter = diameter * 35.0f;
+        cone.transform.localScale = new Vector3(coneDiameter, cone.transform.localScale.y, coneDiameter);
+
         // Sets diameter and the length of the cylinder to the vector magnitude.
         ts.localScale = new Vector3(diameter, vector.magnitude, diameter);
+
+        ApplyRotation(cylinder);
+        ApplyRotation(cone);
+    }
+
+    private void ApplyRotation(GameObject obj)
+    {
+        var ts = obj.transform;
 
         // Looks at the Vector in relation to the cylinde perpendicularly 
         ts.LookAt(vector + ts.position);
