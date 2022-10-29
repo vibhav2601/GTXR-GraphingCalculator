@@ -59,7 +59,7 @@ public class VectorController : MonoBehaviour
     public void SpawnVector()
     {
         GameObject vectorCylinder = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("VectorCylinder")[0]));
-        GameObject instance = new GameObject("Cool Vector by Ilkin");
+        GameObject instance = new GameObject($"Vector{m_VectorBuffer.Count}");
         instance.AddComponent<VectorRenderer>();
         instance.transform.parent = transform;
         instance.transform.localScale = Vector3.one;
