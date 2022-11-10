@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -23,19 +24,25 @@ public class VectorRenderer : MonoBehaviour
     private GameObject cone;
     [SerializeField] 
     private float diameter = 0.05f;
+
     //Rotated 90 degrees on x axis because for some reason that makes the rotation correct. 
     private Vector3 rotation = new Vector3(90, 0, 0);
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // Instantiates cylinder game object
-        cylinder = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("VectorCylinder")[0]));
+        cylinder = Resources.Load("VectorCylinder") as GameObject;
         cylinder = Instantiate(cylinder, transform.position, Quaternion.identity);
-        cylinder.transform.parent = transform;
 
-        cone = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("VectorCone")[0]));
+        cone = Resources.Load("VectorCone") as GameObject;
         cone = Instantiate(cone, transform.position, Quaternion.identity);
+        
+    }
+
+    private void Start()
+    {
+        cylinder.transform.parent = transform;
         cone.transform.parent = transform;
     }
 
@@ -71,5 +78,16 @@ public class VectorRenderer : MonoBehaviour
         ts.LookAt(vector + ts.position);
         // Rotates it 90 degrees to make it parallel 
         ts.Rotate(rotation);
+    }
+
+    public void SetMaterial(Material material)
+    {
+        cylinder.transform.GetChild(cylinder.transform.childCount - 1).gameObject.GetComponent<MeshRenderer>().material = material;
+        cone.transform.GetChild(cone.transform.childCount - 1).gameObject.GetComponent<MeshRenderer>().material = material;
+    }
+
+    public Material GetMaterial()
+    {
+        return cylinder.transform.GetChild(cylinder.transform.childCount - 1).gameObject.GetComponent<MeshRenderer>().material;
     }
 }
