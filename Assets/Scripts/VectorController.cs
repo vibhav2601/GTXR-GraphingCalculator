@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 
 /**
@@ -18,13 +19,21 @@ public class VectorController : MonoBehaviour
 {
     private List<GameObject> m_VectorBuffer;
 
-    public InputActionReference toggleReference = null;
+    public InputActionReference leftTriggerPressed = null;
+    public InputActionReference leftTriggerReleased = null;
+    public InputActionReference rightTriggerPressed = null;
+    public InputActionReference rightTriggerReleased = null;
+
+    public bool grabbingFlag { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
         m_VectorBuffer = new List<GameObject>();
-        toggleReference.action.started += Trigger;
+        leftTriggerPressed.action.started += LeftTriggerPressed;
+        leftTriggerReleased.action.started += LeftTriggerReleased;
+        rightTriggerPressed.action.started += RightTriggerPressed;
+        rightTriggerReleased.action.started += RightTriggerReleased;
         SpawnVector(Vector3.one, Color.yellow);
         
     }
@@ -62,7 +71,10 @@ public class VectorController : MonoBehaviour
 
     void OnDestroy() 
     {
-        toggleReference.action.started -= Trigger;
+        leftTriggerPressed.action.started -= LeftTriggerPressed;
+        leftTriggerReleased.action.started -= LeftTriggerReleased;
+        rightTriggerPressed.action.started -= RightTriggerPressed;
+        rightTriggerReleased.action.started -= RightTriggerReleased;
     }
 
     private Vector3 GetVector(int index)
@@ -71,9 +83,24 @@ public class VectorController : MonoBehaviour
     }
 
     // When left trigger is pressed (defined in the script inspector), a default vector is spawned
-    private void Trigger(InputAction.CallbackContext context) 
+    private void LeftTriggerPressed(InputAction.CallbackContext context) 
     {
         SpawnVector(new Vector3(1, 2, 3), Color.magenta);
+    }
+    
+    private void LeftTriggerReleased(InputAction.CallbackContext context) 
+    {
+        //SpawnVector(new Vector3(1, 2, 3), Color.magenta);
+    }
+
+    private void RightTriggerPressed(InputAction.CallbackContext context)
+    {
+        grabbingFlag = true;
+    }
+
+    private void RightTriggerReleased(InputAction.CallbackContext context)
+    {
+        //grabbingFlag = false;
     }
 
     public void ChangeColor(int vectorIndex, Color color)

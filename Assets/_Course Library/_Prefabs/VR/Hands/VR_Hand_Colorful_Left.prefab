@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5762349686118021892}
   - component: {fileID: 8671717465818592417}
   - component: {fileID: 6898624431874769003}
+  - component: {fileID: 3190317223349417016}
+  - component: {fileID: 4766835766692812027}
   m_Layer: 0
   m_Name: Model_Left
   m_TagString: Untagged
@@ -28,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -0.8, y: 0.8, z: -0.8}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2012454744358855800}
   m_RootOrder: 0
@@ -51,6 +54,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -81,6 +85,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3190317223349417016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4952880071453286846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb12fe027231c44d0a5b299d2df35825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!64 &4766835766692812027
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4952880071453286846}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4488700938393012847, guid: 2cc8b85eef177804ca7b98dd2ee74926, type: 3}
 --- !u!1 &6742014582427155052
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2012454744358855800}
   m_Layer: 0
-  m_Name: VR_Hand_Glove_Left
+  m_Name: VR_Hand_Colorful_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,6 +137,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5762349686118021892}
   m_Father: {fileID: 0}

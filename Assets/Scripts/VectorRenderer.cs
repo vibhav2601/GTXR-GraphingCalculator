@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /**
  * Written by Ilkin Mammadli, Jack English, Moses Lim, and Hai Dao
@@ -69,6 +70,15 @@ public class VectorRenderer : MonoBehaviour
         ApplyRotation(cylinder);
         ApplyRotation(cone);
     }
+
+    // void OnCollisionStay(Collision collision)
+    // {
+    //     if (collision.gameObject.CompareTag("VectorTip"))
+    //     {
+    //         var controllerPosition = GameObject.Find("RightHand Controller").transform.position;
+    //         vector = controllerPosition;
+    //     }
+    // 
 
     private void ApplyRotation(GameObject obj)
     {
