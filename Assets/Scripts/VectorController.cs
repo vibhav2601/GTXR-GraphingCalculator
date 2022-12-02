@@ -34,7 +34,7 @@ public class VectorController : MonoBehaviour
         leftTriggerReleased.action.started += LeftTriggerReleased;
         rightTriggerPressed.action.started += RightTriggerPressed;
         rightTriggerReleased.action.started += RightTriggerReleased;
-        SpawnVector(Vector3.one, Color.yellow);
+        SpawnVector(new Vector3(1,1,1), Color.yellow);
         
     }
 
@@ -85,7 +85,10 @@ public class VectorController : MonoBehaviour
     // When left trigger is pressed (defined in the script inspector), a default vector is spawned
     private void LeftTriggerPressed(InputAction.CallbackContext context) 
     {
-        SpawnVector(new Vector3(1, 2, 3), Color.magenta);
+        SpawnVector(new Vector3(1, 1, 1), new Color(
+            UnityEngine.Random.Range(0f, 1f), 
+            UnityEngine.Random.Range(0f, 1f), 
+            UnityEngine.Random.Range(0f, 1f)));
     }
     
     private void LeftTriggerReleased(InputAction.CallbackContext context) 
@@ -95,7 +98,7 @@ public class VectorController : MonoBehaviour
 
     private void RightTriggerPressed(InputAction.CallbackContext context)
     {
-        grabbingFlag = true;
+        grabbingFlag = !grabbingFlag;
     }
 
     private void RightTriggerReleased(InputAction.CallbackContext context)
