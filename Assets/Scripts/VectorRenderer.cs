@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
+using TMPro; 
 
 /**
  * Written by Ilkin Mammadli, Jack English, Moses Lim, and Hai Dao
@@ -18,12 +21,12 @@ public class VectorRenderer : MonoBehaviour
 {
     // Create variables for vector, cylinder, and diameter.
     public Vector3 vector = Vector3.one;
-    [SerializeField] 
-    private GameObject cylinder;
-    [SerializeField]
-    private GameObject cone;
-    [SerializeField] 
-    private float diameter = 0.05f;
+    [SerializeField] private GameObject cylinder;
+    [SerializeField] private GameObject cone;
+    [SerializeField] private GameObject text;
+    [SerializeField] private float diameter = 0.05f;
+    private TextMeshPro tmp;
+    
 
     //Rotated 90 degrees on x axis because for some reason that makes the rotation correct. 
     private Vector3 rotation = new Vector3(90, 0, 0);
@@ -38,18 +41,24 @@ public class VectorRenderer : MonoBehaviour
         cone = Resources.Load("VectorCone") as GameObject;
         cone = Instantiate(cone, transform.position, Quaternion.identity);
         
+        text = Resources.Load("CoordText") as GameObject;
+        text = Instantiate(text, transform.position, Quaternion.identity);
+        
     }
 
     private void Start()
     {
         cylinder.transform.parent = transform;
         cone.transform.parent = transform;
+        text.transform.parent = transform;
+        tmp = text.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>();
     }
 
     // Update is called once per frame
     void Update()
     {
         cone.transform.localPosition = vector;
+        text.transform.localPosition = vector;
 
         var ts = cylinder.transform;
 
@@ -68,7 +77,19 @@ public class VectorRenderer : MonoBehaviour
 
         ApplyRotation(cylinder);
         ApplyRotation(cone);
+        LookAtCamera(text);
+
+        tmp.text = $"({Math.Round(vector.x, 2)}, {Math.Round(vector.y, 2)}, {Math.Round(vector.z, 2)})";
     }
+
+    // void OnCollisionStay(Collision collision)
+    // {
+    //     if (collision.gameObject.CompareTag("VectorTip"))
+    //     {
+    //         var controllerPosition = GameObject.Find("RightHand Controller").transform.position;
+    //         vector = controllerPosition;
+    //     }
+    // 
 
     private void ApplyRotation(GameObject obj)
     {
@@ -78,6 +99,13 @@ public class VectorRenderer : MonoBehaviour
         ts.LookAt(vector + ts.position);
         // Rotates it 90 degrees to make it parallel 
         ts.Rotate(rotation);
+    }
+
+    public void LookAtCamera(GameObject obj)
+    {
+        Transform cameraTransform = GameObject.Find("Main Camera").transform;
+        
+        obj.transform.LookAt(cameraTransform);
     }
 
     public void SetMaterial(Material material)
@@ -90,4 +118,5 @@ public class VectorRenderer : MonoBehaviour
     {
         return cylinder.transform.GetChild(cylinder.transform.childCount - 1).gameObject.GetComponent<MeshRenderer>().material;
     }
+    
 }

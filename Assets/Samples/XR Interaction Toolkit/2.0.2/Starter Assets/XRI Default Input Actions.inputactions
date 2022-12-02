@@ -280,7 +280,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Test Action 1",
+                    "name": "TriggerReleased",
                     "type": "Button",
                     "id": "c39c9fa1-c081-40ca-92f8-98dad4428ad8",
                     "expectedControlType": "Button",
@@ -470,10 +470,10 @@
                     "name": "",
                     "id": "521a09e5-ecf5-488a-8aaa-e5391cd2cae4",
                     "path": "<XRController>{LeftHand}/triggerPressed",
-                    "interactions": "",
+                    "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "Generic XR Controller",
-                    "action": "Test Action 1",
+                    "action": "TriggerReleased",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -755,6 +755,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "TriggerReleased",
+                    "type": "Button",
+                    "id": "606b38af-98c5-47b6-9fc9-48af63353248",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Select Value",
                     "type": "Value",
                     "id": "39bbf1ac-21a3-413d-90f6-6dbf6efeaabe",
@@ -994,6 +1003,17 @@
                     "action": "Translate Anchor",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "51a31e2f-684f-4e8e-a262-3f57e0874820",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "TriggerReleased",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
